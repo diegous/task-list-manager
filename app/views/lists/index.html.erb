@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Lists</h1>
+
+<table>
+  <% @lists.each do |list| %>
+    <tr>
+      <td><%= link_to list.title, list %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+
+<%= render partial: 'form', locals: { list: @list } %>

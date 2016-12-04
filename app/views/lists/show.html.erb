@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @list.title %></h1>
+
+<%= link_to 'Edit Title', edit_list_path(@list) %>
+
+<label>This list was created</label>
+<p><%= @created_date %></p>
+
+<label>Last modified</label
+<p><%= @last_modified %></p>
+
+<label>Link to this list<label>
+<code><%= link_to @slug_link %></code>
+
+
+<h1>Tasks</h1>
+
+<div>
+  <% unless @list.tasks.empty? %>
+    <% @list.tasks.each do |task| %>
+      <%= render 'tasks/task', task: task %>
+    <% end %>
+  <% else %>
+    <h2>There are no tasks in this list</h2>
+  <% end %>
+</div>
+
+<div>
+  <%= link_to 'New Simple Task', new_list_task_path(@list, type: 'SimpleTask') %> |
+  <%= link_to 'New Long Task', new_list_task_path(@list, type: 'LongTask') %> |
+  <%= link_to 'New Temporary Task', new_list_task_path(@list, type: 'TemporaryTask') %>
+</div>
+
+<%= link_to 'Edit', edit_list_path(@list) %> |
+<%= link_to 'Back', lists_path %>
