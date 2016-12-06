@@ -35,7 +35,7 @@ class ListsController < ApplicationController
     if @list.update(list_params)
       redirect_to @list, notice: 'List was successfully updated.'
     else
-      render :edit
+      render :show
     end
   end
 

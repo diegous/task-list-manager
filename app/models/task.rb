@@ -12,4 +12,16 @@ class Task < ApplicationRecord
   def partial_name
     type.underscore
   end
+
+  def simple?
+    type == 'SimpleTask'
+  end
+
+  def long_task?
+    type == 'LongTask'
+  end
+
+  def temporary_task?
+    type == 'TemporaryTask'
+  end
 end

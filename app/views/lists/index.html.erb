@@ -19,4 +19,7 @@
   <h3>There are no lists to show yet</h3>
 <% end %>
 
-<%= render partial: 'form', locals: { list: @list } %>
+<%= simple_form_for(@list) do |f| %>
+  <%= f.input :title, required: true %>
+  <%= f.button :submit, class: "btn btn-primary" %>
+<% end %>
