@@ -1,14 +1,29 @@
-<lablel><%= task.type.titleize %></lablel>
+<div class="panel panel-<%= task.state.finished? ? 'default' : 'primary' %>">
+  <div class="panel-heading">
+    <div class="btn-group pull-right">
+      <%= link_to edit_list_task_path(@list, task), class: "btn btn-default" do %>
+          <i class="glyphicon glyphicon-pencil"></i>
+      <% end %>
+    </div>
 
-<label>State</label>
-<p><%= task.state.name %></p>
+    <h4>
+      <%= task.description %>
+    </h4>
+  </div>
 
-<label>Priority</label>
-<p><%= task.priority.name %></p>
+  <div class="panel-body">
+    <div >
+      <label>State</label>
+      <p><%= task.state.name.capitalize %></p>
 
-<label>Description</label>
-<p><%= task.description %></p>
+      <label>Priority</label>
+      <p><%= task.priority.name.capitalize %></p>
 
-<%= render "tasks/#{task.partial_name}", task: task %>
+      <label>Type</label>
+      <p><%= task.type.titleize %></p>
 
-<%= link_to 'Edit Task', edit_list_task_path(@list, task) %>
+      <%= render "tasks/#{task.partial_name}", task: task %>
+    </div>
+
+  </div>
+</div>

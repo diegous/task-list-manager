@@ -1,4 +1,4 @@
-<h1>New <%= @type.titleize %></h1>
+<h2>New <%= @type.titleize %></h2>
 
 <%= simple_form_for([@list, @task], url: list_tasks_path) do |f| %>
   <%= f.hidden_field :type, value: @type %>
@@ -12,7 +12,7 @@
     <%= f.input :end_date, required: true %>
   <% end %>
 
-  <% if @task.errors %>
+  <% if @task.errors.any? %>
     <%= render 'layouts/errors', errors: @task.errors.full_messages %>
   <% end %>
 

@@ -1,15 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Lists</h1>
+<h2>Lists</h2>
 
-<table>
-  <% @lists.each do |list| %>
-    <tr>
-      <td><%= link_to list.title, list %></td>
-    </tr>
-  <% end %>
-</table>
-
-<br>
+<div class="row">
+  <div class="col-sm-6">
+    <ul class="list-group">
+      <% @lists.each do |list| %>
+        <li class="list-group-item">
+          <span class="badge"><%= list.tasks.count %></span>
+          <%= link_to list.title, list %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 <%= render partial: 'form', locals: { list: @list } %>
