@@ -2,17 +2,21 @@
 
 <h2>Lists</h2>
 
-<div class="row">
-  <div class="col-sm-6">
-    <ul class="list-group">
-      <% @lists.each do |list| %>
-        <li class="list-group-item">
-          <span class="badge"><%= list.tasks.count %></span>
-          <%= link_to list.title, list %>
-        </li>
-      <% end %>
-    </ul>
+<% if @lists.any? %>
+  <div class="row">
+    <div class="col-sm-6">
+      <ul class="list-group">
+        <% @lists.each do |list| %>
+          <li class="list-group-item">
+            <span class="badge"><%= list.tasks.count %></span>
+            <%= link_to list.title, list %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
-</div>
+<% else %>
+  <h3>There are no lists to show yet</h3>
+<% end %>
 
 <%= render partial: 'form', locals: { list: @list } %>
