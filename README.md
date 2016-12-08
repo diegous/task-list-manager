@@ -12,3 +12,8 @@ bundle exec rails db:setup
 ```
 bundle exec rails server
 ```
+
+# Correr tests
+```
+bundle exec rspec spec
+```
