@@ -27,7 +27,8 @@ class ListsController < ApplicationController
       current_browser_lists << @list.id
       redirect_to @list, notice: 'List was successfully created.'
     else
-      render :new
+      @lists = List.find(current_browser_lists).last(5)
+      render :index
     end
   end
 
