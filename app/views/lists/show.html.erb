@@ -69,9 +69,11 @@
 <div>
   <% unless @list.tasks.empty? %>
     <% @list.tasks.each do |task| %>
-      <div>
-        <%= render 'tasks/task', task: task.becomes(Task) %>
-      </div>
+      <% unless task.state.expired? %>
+        <div>
+          <%= render 'tasks/task', task: task.becomes(Task) %>
+        </div>
+      <% end %>
     <% end %>
   <% else %>
     <h2>There are no tasks in this list</h2>

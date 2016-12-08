@@ -11,7 +11,7 @@ values = ['low', 'medium', 'high']
 values.each { |value| Priority.create(name: value) }
 
 # States
-values = ['pending', 'finished']
+values = ['pending', 'in_progress', 'finished', 'expired']
 values.each {|value| State.create(name: value)}
 
 # ============= #
@@ -19,14 +19,14 @@ values.each {|value| State.create(name: value)}
 # ============= #
 list = List.create(title: 'Lista 0')
 
-def task_values(list, task, i)
-  { list: list, state: State.all[i], priority: Priority.all[i], description: "#{task} task #{i}" }
+def task_values(list, name, i)
+  { list: list, state: State.all[i], priority: Priority.all[i], description: "#{name} task #{i}" }
 end
 
 3.times do |i|
   SimpleTask.create    task_values(list, 'simple', i)
   LongTask.create      task_values(list, 'long', i).merge(percentage: i*25)
-  TemporaryTask.create task_values(list, 'long', i).merge(start_date: Date.today + i, end_date: Date.tomorrow + i*2)
+  TemporaryTask.create task_values(list, 'temporary', i).merge(start_date: Date.today + i, end_date: Date.tomorrow + i*2)
 end
 
 

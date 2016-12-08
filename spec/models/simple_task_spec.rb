@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe SimpleTask, :type => :model do
   let(:list) { List.create title: 'list' }
   let(:state) { State.create name: 'pending' }
+  let(:expired) { State.create name: 'expired' }
+  let(:in_progress) { State.create name: 'in_progress' }
   let(:priority) { Priority.create name: 'low' }
   let(:task) { SimpleTask.new list: list, state: state, priority: priority, description: 'a task' }
 
@@ -19,6 +21,16 @@ RSpec.describe SimpleTask, :type => :model do
 
     it 'cannot hava a percentage' do
       task.percentage = 10
+      expect(task).to_not be_valid
+    end
+
+    it 'cannot have an "in_progress" state' do
+      task.state = State.find_by(name: in_progress.name)
+      expect(task).to_not be_valid
+    end
+
+    it 'cannot have an "expired" state' do
+      task.state = State.find_by(name: expired.name)
       expect(task).to_not be_valid
     end
 

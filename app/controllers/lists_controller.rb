@@ -7,14 +7,21 @@ class ListsController < ApplicationController
   end
 
   def show
-    @tasks = @list.tasks
-    @created_date = @list.created_at.to_date.to_formatted_s(:long)
+    # Mark Temporary tasks as expired
+    @list.tasks.each do |task|
+      if task.expired?
+        task.update(state: State.find_by(name: 'expired'))
+      end
+    end
+
+    @tasks = @list.tasks.order(:state_id)
     @slug_link = url_for controller: 'lists', action: 'show', only_path: false
 
     modification_dates = @list.tasks.map { |task| task.updated_at }
     modification_dates << @list.updated_at
     @last_modified = modification_dates.reduce { |biggest, date| [biggest, date].max }
     @last_modified = @last_modified.to_date.to_formatted_s(:long)
+    @created_date = @list.created_at.to_formatted_s(:long)
   end
 
   def edit
