@@ -1,0 +1,21 @@
+<%= form.input :description, error: false %>
+<%= form.input :priority_id, collection: Priority.all.collect{ |p| [ p.name.humanize, p.id ] }, required: true %>
+
+<% if type == 'LongTask' %>
+  <%= form.input :percentage, as: :integer %>
+<% elsif type == 'TemporaryTask' %>
+  <%= form.input :start_date, required: true %>
+  <%= form.input :end_date, required: true %>
+<% end %>
+
+<% if show_state_select %>
+<%= form.input :state_id,
+               collection: State.where(name: task.valid_states).collect{ |s| [ s.name.humanize, s.id ] },
+               required: true %>
+<% end %>
+
+<% if task.errors.any? %>
+  <%= render 'layouts/form_errors', errors: task.errors.full_messages %>
+<% end %>
+
+<%= form.button :submit %>

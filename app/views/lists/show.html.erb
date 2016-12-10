@@ -51,11 +51,11 @@
 
 <div class="row">
   <div class="col-sm-3">
-    <p><%= @created_date %></p>
+    <p><%= @list.created_at.to_formatted_s(:long) %></p>
   </div>
 
   <div class="col-sm-3">
-    <p><%= @last_modified %></p>
+    <p><%= @list.updated_at.to_formatted_s(:long) %></p>
   </div>
 
   <div class="col-sm-6">
@@ -67,11 +67,11 @@
 <h3>Tasks</h3>
 
 <div>
-  <% unless @list.tasks.empty? %>
-    <% @list.tasks.each do |task| %>
+  <% unless @tasks.empty? %>
+    <% @tasks.each do |task| %>
       <% unless task.state.expired? %>
         <div>
-          <%= render 'tasks/task', task: task.becomes(Task) %>
+          <%= render 'tasks/task', task: task %>
         </div>
       <% end %>
     <% end %>

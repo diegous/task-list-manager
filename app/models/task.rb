@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  belongs_to :list
+  belongs_to :list, touch: true
   belongs_to :state
   belongs_to :priority
 
@@ -27,7 +27,7 @@ class Task < ApplicationRecord
     type == 'TemporaryTask'
   end
 
-  def expired?
+  def has_expired?
     false
   end
 

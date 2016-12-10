@@ -6,7 +6,7 @@ class TemporaryTask < Task
 
   validate :start_is_lower_than_end
 
-  def expired?
+  def has_expired?
     end_date <= Date.today
   end
 

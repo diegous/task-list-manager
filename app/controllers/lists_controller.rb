@@ -9,19 +9,13 @@ class ListsController < ApplicationController
   def show
     # Mark Temporary tasks as expired
     @list.tasks.each do |task|
-      if task.expired?
+      if task.has_expired?
         task.update(state: State.find_by(name: 'expired'))
       end
     end
 
-    @tasks = @list.tasks.order(:state_id)
+    @tasks = @list.tasks.order(priority_id: :desc)
     @slug_link = url_for controller: 'lists', action: 'show', only_path: false
-
-    modification_dates = @list.tasks.map { |task| task.updated_at }
-    modification_dates << @list.updated_at
-    @last_modified = modification_dates.reduce { |biggest, date| [biggest, date].max }
-    @last_modified = @last_modified.to_date.to_formatted_s(:long)
-    @created_date = @list.created_at.to_formatted_s(:long)
   end
 
   def edit
@@ -47,13 +41,12 @@ class ListsController < ApplicationController
     end
   end
 
-  def destroy
-    @list.destroy
-    respond_to do |format|
-      format.html { redirect_to lists_url, notice: 'List was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @list.destroy
+  #   respond_to do |format|
+  #     redirect_to lists_url, notice: 'List was successfully destroyed.'
+  #   end
+  # end
 
   private
     def set_list

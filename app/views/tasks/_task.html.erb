@@ -13,11 +13,11 @@
 
   <div class="panel-body">
     <div >
-      <label>State</label>
-      <p><%= task.state.name.capitalize %></p>
-
       <label>Priority</label>
-      <p><%= task.priority.name.capitalize %></p>
+      <p><%= task.priority.name.humanize %></p>
+
+      <label>State</label>
+      <p><%= task.state.name.humanize %></p>
 
       <label>Type</label>
       <p><%= task.type.titleize %></p>
@@ -32,27 +32,13 @@
 <div class="modal fade" id="modal-<%= task.id %>" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <%= simple_form_for([task.list, task], url: list_task_path(task.list, task)) do |f| %>
+      <%= simple_form_for([task.list, task.becomes(Task)], url: list_task_path(task.list, task)) do |f| %>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">Edit <%= task.type.titleize %></h4>
         </div>
         <div class="modal-body">
-            <%= f.input :description, error: false %>
-            <%= f.input :priority_id, collection: Priority.all, required: true %>
-
-            <% if task.long_task? %>
-              <%= f.input :percentage, as: :integer %>
-            <% elsif task.temporary_task? %>
-              <%= f.input :start_date, required: true %>
-              <%= f.input :end_date, required: true %>
-            <% end %>
-
-            <%= f.input :state_id, collection: State.all, required: true %>
-
-            <% if task.errors.any? %>
-              <%= render 'layouts/errors', errors: task.errors.full_messages %>
-            <% end %>
+            <%= render 'tasks/edit_form', form: f, task: task, type: task.type, show_state_select: true %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

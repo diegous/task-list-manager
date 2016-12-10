@@ -8,9 +8,6 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = @task.becomes(Task)
-    @list = List.find_by(slug: params[:list_id])
-    @type = @task.type
   end
 
   def create
@@ -33,20 +30,17 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task.list, notice: 'Task was successfully updated.'
     else
-      @task = @task.becomes(Task)
-      @list = List.find_by(slug: params[:list_id])
-      @type = @task.type
-
       render :edit
     end
   end
 
-  def destroy
-    @task.destroy
-    respond_to do |format|
-      redirect_to lists_url, notice: 'List was successfully destroyed.'
-    end
-  end
+ # def destroy
+ #   @task.destroy
+ #   respond_to do |format|
+ #     redirect_to lists_url, notice: 'List was successfully destroyed.'
+ #   end
+ # end
+
 
   private
     def set_task

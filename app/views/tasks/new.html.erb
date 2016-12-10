@@ -2,21 +2,7 @@
 
 <%= simple_form_for([@list, @task], url: list_tasks_path) do |f| %>
   <%= f.hidden_field :type, value: @type %>
-  <%= f.input :description, error: false %>
-  <%= f.input :priority_id, collection: Priority.all, required: true %>
-
-  <% if @type == 'LongTask' %>
-    <%= f.hidden_field :percentage, value: 0 %>
-  <% elsif @type == 'TemporaryTask' %>
-    <%= f.input :start_date, required: true %>
-    <%= f.input :end_date, required: true %>
-  <% end %>
-
-  <% if @task.errors.any? %>
-    <%= render 'layouts/errors', errors: @task.errors.full_messages %>
-  <% end %>
-
-  <%= f.button :submit %>
+  <%= render 'edit_form', form: f, task: @task, type: @type, show_state_select: false %>
 <% end %>
 
 <%= link_to 'Back', lists_path %>
